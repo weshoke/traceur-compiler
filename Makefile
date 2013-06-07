@@ -10,7 +10,9 @@ GENSRC = \
   src/syntax/trees/ParseTreeType.js \
   src/syntax/trees/ParseTrees.js \
   src/syntax/ParseTreeVisitor.js
-TPL_GENSRC_DEPS = $(addsuffix -template.js.dep, $(TPL_GENSRC))
+# TPL_GENSRC_DEPS = $(addsuffix -template.js.dep, $(TPL_GENSRC))
+TPL_GENSRC_DEPS = \
+  src/outputgeneration/SourceMapIntegration.js-template.js.dep
 
 TFLAGS = --
 
