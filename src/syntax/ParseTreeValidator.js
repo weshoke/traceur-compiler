@@ -88,6 +88,8 @@ import {
   SET_ACCESSOR,
   TEMPLATE_LITERAL_PORTION,
   TEMPLATE_SUBSTITUTION,
+  TYPE_NAME,
+  TYPED_BINDING_ELEMENT,
   VARIABLE_DECLARATION_LIST,
   VARIABLE_STATEMENT
 } from './trees/ParseTreeType.js';
@@ -958,6 +960,16 @@ export class ParseTreeValidator extends ParseTreeVisitor {
     if (tree.catchBlock === null && tree.finallyBlock === null) {
       this.fail_(tree, 'either catch or finally must be present');
     }
+  }
+
+   /**
+   * @param {TypedBindingElement} tree
+   */
+  visitTypedBindingElement(tree) {
+  	var element = tree.element
+    this.checkVisit_(
+    	element.type == BINDING_ELEMENT,
+        'binding element expected');
   }
 
   /**

@@ -163,7 +163,9 @@ export class Parser {
     var start = this.getTreeStartLocation_();
     var programElements = this.parseProgramElements_(load);
     this.eat_(END_OF_FILE);
-    return new Program(this.getTreeLocation_(start), programElements);
+    var p = new Program(this.getTreeLocation_(start), programElements);
+    console.log("PARSE TREE\n", p);
+    return p
   }
 
   /**
@@ -887,7 +889,18 @@ export class Parser {
   }
 
   parseFormalParameter_(initializerAllowed = undefined) {
-    return this.parseBindingElement_(initializerAllowed);
+    return this.parseTypedBindingElement_(initializerAllowed);
+  }
+  
+  parseTypedBindingElement_(initializerAllowed) {
+  	var start = this.getTreeStartLocation_();
+  	var element = this.parseBindingElement_(initializerAllowed);
+  	var typeName
+  	if(this.peekType_()==COLON) {
+  		this.eat_(COLON);
+  		typeName = this.eatId_();
+  	}
+  	return new TypedBindingElement(this.getTreeLocation_(start), element, typeName)
   }
 
   parseRestParameter_() {

@@ -958,6 +958,21 @@ export class ParseTreeWriter extends ParseTreeVisitor {
     }
     this.write_(tree.name);
   }
+  
+   /**
+   * @param {TypedBindingElement} tree
+   */
+  visitTypedBindingElement(tree) {
+    this.visitAny(tree.element);
+    
+    // don't write type information into the JS code
+    // it's intended for analysis only
+   /* if(tree.name) {
+		this.write_(COLON);
+		this.visitAny(tree.typeName);
+	}
+	*/
+  }
 
   /**
    * @param {UnaryExpression} tree
