@@ -2902,6 +2902,9 @@ var $___src_syntax_ParseTreeVisitor_js = (function() {
       visitTypeName: function(tree) {
         this.visitAny(tree.moduleName);
       },
+      visitTypedBindingElement: function(tree) {
+        this.visitAny(tree.element);
+      },
       visitUnaryExpression: function(tree) {
         this.visitAny(tree.operand);
       },
@@ -6599,6 +6602,13 @@ var $___src_codegeneration_ParseTreeTransformer_js = (function() {
           return tree;
         }
         return new TypeName(tree.location, moduleName, tree.name);
+      },
+      transformTypedBindingElement: function(tree) {
+        var element = this.transformAny(tree.element);
+        if (element === tree.element) {
+          return tree;
+        }
+        return new TypedBindingElement(tree.location, element, tree.typeName);
       },
       transformUnaryExpression: function(tree) {
         var operand = this.transformAny(tree.operand);
